@@ -266,7 +266,7 @@ buffer. The node is either:
 
 (defun edts-query (prompt choices &optional error-msg)
   "Query the user for a choice"
-  (let ((choice (ido-completing-read prompt choices)))
+  (let ((choice (completing-read prompt choices)))
     (if (member choice choices)
         choice
       (error (or error-msg "Invalid choice")))))
@@ -280,10 +280,10 @@ buffer. The node is either:
          (fun (edts-query "Function: " (cons "-Top of Chapter-" fun-strings))))
     (if (string= fun "-Top of Chapter-")
         (edts-man-find-module module)
-        (let* ((split     (split-string fun "/"))
-               (fun-name  (car split))
-               (fun-arity (string-to-number (cadr split))))
-          (edts-man-find-function-entry module fun-name fun-arity)))))
+      (let* ((split     (split-string fun "/"))
+             (fun-name  (car split))
+             (fun-arity (string-to-number (cadr split))))
+        (edts-man-find-function-entry module fun-name fun-arity)))))
 
 (defun edts-show-doc-under-point ()
   "Find and display the man-page documentation for function under point
